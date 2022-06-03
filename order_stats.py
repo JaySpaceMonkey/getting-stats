@@ -50,6 +50,6 @@ if __name__== "__main__":
     end_time = datetime.datetime(y,m,d,23,59,59).timestamp()
     l,r=get_stat_order(city,start_time,end_time)
     print(l)
-    print(r)
+    
     
     
