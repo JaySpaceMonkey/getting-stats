@@ -15,7 +15,7 @@ dic_company_city={}
 for i in data_company:
     dic_company_city[i['id']]=i.get('city')
 
-def get_stat_order_request(city,pharma,start_time,end_time):
+def get_stat_order_request(city,pharma,start_time,end_time,avg):
     l1=[]
     temp_di={}
     for i in data_order_request:
@@ -26,7 +26,7 @@ def get_stat_order_request(city,pharma,start_time,end_time):
     
     total_request_orders = len(l1)
     orders_attended = l1.count('submitted')
-    business_lost = l1.count('unattended') * 500
+    business_lost = l1.count('unattended') * avg
     t ={'pharma_cid': pharma,'total':total_request_orders, 'attended' : orders_attended , 'lost': business_lost}
     
     return t
@@ -62,7 +62,7 @@ if __name__== "__main__":
         lis_of_pharmas.append(u['cid'])
     report =[]
     for pharma in lis_of_pharmas:
-        report.append(get_stat_order_request(city,pharma,int(start_time),int(end_time)))
+        report.append(get_stat_order_request(city,pharma,int(start_time),int(end_time),avg_amt_lost))
     #print(report)
 
     final_report = pd.DataFrame(report,columns =[ 'pharma_cid','total', 'attended', 'lost'])
